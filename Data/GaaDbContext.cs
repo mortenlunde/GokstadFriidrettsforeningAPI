@@ -30,6 +30,13 @@ public class GaaDbContext(DbContextOptions<GaaDbContext> options) : DbContext(op
         modelBuilder.Entity<Member>(entity =>
         {
             entity.HasKey(m => m.MemberId );
+            entity.Property(m => m.Gender).HasColumnType("CHAR(1)");
+            entity.OwnsOne(m => m.Address, a =>
+            {
+                a.Property(ad => ad.Street).HasColumnName("Address_Street");
+                a.Property(ad => ad.PostalCode).HasColumnName("Address_PostalCode").HasColumnType("SMALLINT");
+                a.Property(ad => ad.City).HasColumnName("Address_City");
+            });
             entity.HasIndex(m => m.Email).IsUnique();
             entity.Property(m => m.MemberId).ValueGeneratedOnAdd();
         });

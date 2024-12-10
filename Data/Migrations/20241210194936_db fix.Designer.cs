@@ -4,6 +4,7 @@ using GokstadFriidrettsforeningAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GokstadFriidrettsforeningAPI.Data.Migrations
 {
     [DbContext(typeof(GaaDbContext))]
-    partial class GaaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241210194936_db fix")]
+    partial class dbfix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,23 +36,20 @@ namespace GokstadFriidrettsforeningAPI.Data.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateOnly>("DateOfBirth")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Gender")
                         .IsRequired()
-                        .HasMaxLength(1)
-                        .HasColumnType("CHAR(1)");
+                        .HasColumnType("varchar(1)");
 
                     b.Property<string>("HashedPassword")
                         .IsRequired()
@@ -57,8 +57,7 @@ namespace GokstadFriidrettsforeningAPI.Data.Migrations
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("Updated")
                         .HasColumnType("datetime(6)");
@@ -124,18 +123,16 @@ namespace GokstadFriidrettsforeningAPI.Data.Migrations
 
                             b1.Property<string>("City")
                                 .IsRequired()
-                                .HasMaxLength(50)
-                                .HasColumnType("varchar(50)")
+                                .HasColumnType("longtext")
                                 .HasColumnName("Address_City");
 
-                            b1.Property<short>("PostalCode")
-                                .HasColumnType("SMALLINT")
+                            b1.Property<int>("PostalCode")
+                                .HasColumnType("int")
                                 .HasColumnName("Address_PostalCode");
 
                             b1.Property<string>("Street")
                                 .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("varchar(100)")
+                                .HasColumnType("longtext")
                                 .HasColumnName("Address_Street");
 
                             b1.HasKey("MemberId");

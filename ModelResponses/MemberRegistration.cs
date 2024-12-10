@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using GokstadFriidrettsforeningAPI.Models;
 namespace GokstadFriidrettsforeningAPI.ModelResponses;
 
