@@ -1,4 +1,3 @@
-using System.Text.Json.Serialization;
 using GokstadFriidrettsforeningAPI.Models;
 namespace GokstadFriidrettsforeningAPI.ModelResponses;
 
@@ -10,7 +9,5 @@ public class MemberRegistration
     public char Gender { get; set; }
     public Address? Address { get; set; }
     public DateOnly DateOfBirth { get; set; }
-    public DateTime Created { get; set; }
-    public DateTime Updated { get; set; }
     public string Password { get; set; } = string.Empty;
 }

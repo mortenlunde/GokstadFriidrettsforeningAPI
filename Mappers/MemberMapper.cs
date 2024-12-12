@@ -5,7 +5,7 @@ namespace GokstadFriidrettsforeningAPI.Mappers;
 
 public class MemberMapper : IMapper<Member, MemberResponse>
 {
-    public MemberResponse MapToResonse(Member model)
+    public MemberResponse MapToResponse(Member model)
     {
         return new MemberResponse
         {

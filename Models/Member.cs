@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
 namespace GokstadFriidrettsforeningAPI.Models;
 
 public class Member
@@ -34,7 +33,7 @@ public class Member
     [Required]
     public DateTime Updated { get; set; }
 
-    [Required]
+    [Required, StringLength(60)]
     public string HashedPassword { get; set; } = string.Empty;
 
     public Address? Address { get; set; }

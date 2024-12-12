@@ -2,6 +2,6 @@ namespace GokstadFriidrettsforeningAPI.Mappers;
 
 public interface IMapper<TModel, TResponse>
 {
-    TResponse MapToResonse(TModel model);
+    TResponse MapToResponse(TModel model);
     TModel MapToModel(TResponse response);
 }
