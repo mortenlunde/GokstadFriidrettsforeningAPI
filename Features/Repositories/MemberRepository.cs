@@ -100,7 +100,6 @@ public class MemberRepository(ILogger<MemberRepository> logger, GaaDbContext con
             Console.WriteLine(e);
             throw;
         }
-      
     }
 
     public async Task<Member?> UpdateByIdAsync(int id, Member entity)

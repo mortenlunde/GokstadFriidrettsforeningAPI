@@ -6,6 +6,8 @@ using GokstadFriidrettsforeningAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using UnauthorizedAccessException = System.UnauthorizedAccessException;
+
 namespace GokstadFriidrettsforeningAPI.Features.Controllers;
 
 [ApiController]
@@ -18,7 +20,7 @@ public class MembersController(
     [Authorize]
     [HttpGet(Name = "GetMembers")]
     public async Task<IActionResult> GetMembers(
-        [FromQuery] SearchParameters query, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        [FromQuery] MemberQuery query, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
     {
         if (page <= 0 || pageSize <= 0)
         {

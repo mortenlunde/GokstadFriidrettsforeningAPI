@@ -12,6 +12,7 @@ using GokstadFriidrettsforeningAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using MySqlConnector;
 
 namespace GokstadFriidrettsforeningAPI.Extensions;
 
@@ -107,11 +108,29 @@ public static class ServiceCollectionExtension
     
     public static void AddDatabaseService(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<GaaDbContext>(options =>
-            options.UseMySql(configuration.GetConnectionString("DefaultConnection"),
-                ServerVersion.AutoDetect(configuration.GetConnectionString("DefaultConnection")),
-                mySqlOptions => mySqlOptions.EnableRetryOnFailure(2)));
-        services.AddScoped<DatabaseConnectionMiddleware>();
+        try
+        {
+            services.AddDbContext<GaaDbContext>(options =>
+                options.UseMySql(configuration.GetConnectionString("DefaultConnection"),
+                    ServerVersion.AutoDetect(configuration.GetConnectionString("DefaultConnection")),
+                    mySqlOptions => mySqlOptions.EnableRetryOnFailure(2)));
+        }
+        catch (MySqlException)
+        {
+            throw new DatabaseUnavailableException("Unable to connect to the database. Please try again later.");
+        }
+        catch (Exception)
+        {
+            throw new DatabaseUnavailableException("Unable to connect to the database.");
+        }
+    }
+    
+    public static void AddDatabaseHealthCheck(this IServiceCollection services, IConfiguration configuration)
+    {
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+        services.AddHealthChecks()
+            .AddMySql(connectionString, name: "Database", tags: new[] { "ready" });
     }
     
     public static void ConfigureExceptionHandler(this IServiceCollection services)

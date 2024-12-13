@@ -14,5 +14,6 @@ public class Race
     public int Distance { get; set; }
     public int Laps { get; set; }
 
+    public virtual ICollection<Registration> Registrations { get; set; }
     public virtual ICollection<Result> Results { get; set; } = new HashSet<Result>();
 }

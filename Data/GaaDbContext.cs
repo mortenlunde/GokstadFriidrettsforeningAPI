@@ -6,7 +6,9 @@ public class GaaDbContext(DbContextOptions<GaaDbContext> options) : DbContext(op
 {
     public DbSet<Member> Members { get; set; }
     public DbSet<Race> Races { get; set; }
+    public DbSet<Registration> Registrations { get; set; }
     public DbSet<Result> Results { get; set; }
+    public DbSet<Log> Logs { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -40,7 +42,16 @@ public class GaaDbContext(DbContextOptions<GaaDbContext> options) : DbContext(op
             entity.HasIndex(m => m.Email).IsUnique();
             entity.Property(m => m.MemberId).ValueGeneratedOnAdd();
         });
+
+        modelBuilder.Entity<Registration>(entity =>
+        {
+            entity.HasKey(r => new { r.MemberId, RacerId = r.RaceId });
+            entity.HasOne(r => r.Member).WithMany(m => m.Registrations).HasForeignKey(r => r.MemberId)
+                .OnDelete(DeleteBehavior.Cascade);
             
+            entity.HasOne(r => r.Race).WithMany(r => r.Registrations).HasForeignKey(r => r.RaceId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
         
         // Primærnøkkel for Race- tabell, og auto-increment
         modelBuilder.Entity<Race>(entity =>

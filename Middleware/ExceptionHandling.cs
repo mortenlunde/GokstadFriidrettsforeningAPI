@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using MySqlConnector;
-using Newtonsoft.Json;
 
 namespace GokstadFriidrettsforeningAPI.Middleware;
 
@@ -25,6 +24,7 @@ public class ExceptionHandling(ILogger<ExceptionHandling> logger) : IExceptionHa
             RetryLimitExceededException => StatusCodes.Status503ServiceUnavailable,
             DbUpdateException => StatusCodes.Status503ServiceUnavailable,
             NotFoundException => StatusCodes.Status404NotFound,
+            DatabaseUnavailableException => StatusCodes.Status503ServiceUnavailable,
             _ => StatusCodes.Status500InternalServerError
         };
 
@@ -57,3 +57,7 @@ public class UnauthorisedOperation()
 
 public class NotFoundException()
     : Exception("Dette objektet finnes ikke.") { }
+    
+public class DatabaseUnavailableException(string message) : Exception(message);
+
+public class UnauthorizedAccessException(string message) : Exception(message);

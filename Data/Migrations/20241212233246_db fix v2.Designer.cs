@@ -4,6 +4,7 @@ using GokstadFriidrettsforeningAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GokstadFriidrettsforeningAPI.Data.Migrations
 {
     [DbContext(typeof(GaaDbContext))]
-    partial class GaaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241212233246_db fix v2")]
+    partial class dbfixv2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

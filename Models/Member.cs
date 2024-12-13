@@ -37,7 +37,8 @@ public class Member
     public string HashedPassword { get; set; } = string.Empty;
 
     public Address? Address { get; set; }
-
+    
+    public virtual ICollection<Registration> Registrations { get; set; }
     public virtual ICollection<Result> Results { get; set; } = new HashSet<Result>();
 }
 

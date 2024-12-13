@@ -5,6 +5,8 @@ using GokstadFriidrettsforeningAPI.Mappers;
 using GokstadFriidrettsforeningAPI.Middleware;
 using GokstadFriidrettsforeningAPI.ModelResponses;
 using GokstadFriidrettsforeningAPI.Models;
+using UnauthorizedAccessException = System.UnauthorizedAccessException;
+
 namespace GokstadFriidrettsforeningAPI.Features.Services;
 
 public class MemberService(
@@ -46,12 +48,12 @@ public class MemberService(
         return mapper.MapToResponse(member);
     }
 
-    public async Task<IEnumerable<MemberResponse>> FindAsync(SearchParameters searchParameters)
+    public async Task<IEnumerable<MemberResponse>> FindAsync(MemberQuery searchQuery)
     {
         Expression<Func<Member, bool>> predicate = member =>
-            (string.IsNullOrEmpty(searchParameters.Firstname) || member.FirstName.Contains(searchParameters.Firstname)) && 
-            (string.IsNullOrEmpty(searchParameters.Lastname) || member.LastName.Contains(searchParameters.Lastname)) &&
-            (string.IsNullOrEmpty(searchParameters.Email) || member.Email.Contains(searchParameters.Email));
+            (string.IsNullOrEmpty(searchQuery.Firstname) || member.FirstName.Contains(searchQuery.Firstname)) && 
+            (string.IsNullOrEmpty(searchQuery.Lastname) || member.LastName.Contains(searchQuery.Lastname)) &&
+            (string.IsNullOrEmpty(searchQuery.Email) || member.Email.Contains(searchQuery.Email));
 
         IEnumerable<Member> members = await repository.FindAsync(predicate);
         return members.Select(mapper.MapToResponse).ToList();
