@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace GokstadFriidrettsforeningAPI.Features.Services;
 
 public class MemberQuery
@@ -13,4 +15,13 @@ public class RacesQuery
     public DateOnly? Date { get; set; }
     public int? Distance { get; set; }
     public int? Laps { get; set; }
+}
+
+public class ResultQuery
+{
+    public int? MemberId { get; set; }
+    
+    [Required]
+    public int? RaceId { get; set; }
+    public TimeSpan? Time { get; set; }
 }

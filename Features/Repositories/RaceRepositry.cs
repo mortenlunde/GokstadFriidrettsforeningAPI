@@ -72,12 +72,34 @@ public class RaceRepositry(ILogger<MemberRepository> logger, GaaDbContext contex
 
     public async Task<Race?> GetByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        return await context.Races.FirstOrDefaultAsync(m => m.RaceId == id);
     }
 
     public async Task<Race?> DeleteByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            Race? race = await context.Races.FindAsync(id);
+            if (race == null) return null;
+            await context.Races.Where(m => m.RaceId == id).ExecuteDeleteAsync();
+            await context.SaveChangesAsync();
+            return race;
+        }
+        catch (UnauthorizedAccessException e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        catch (KeyNotFoundException e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     public async Task<Race?> UpdateByIdAsync(int id, Race entity)

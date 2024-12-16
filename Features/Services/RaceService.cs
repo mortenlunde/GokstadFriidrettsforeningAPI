@@ -11,7 +11,8 @@ namespace GokstadFriidrettsforeningAPI.Features.Services;
 public class RaceService(
     ILogger<RaceService> logger,
     IMapper<Race, RaceResponse> mapper,
-    IRaceRepository repository) : IRaceService
+    IRaceRepository repository,
+    IUserContextService httpContextAccessor) : IRaceService
 {
     public async Task<IEnumerable<RaceResponse>> GetPagedAsync(int pageNumber, int pageSize)
     {
@@ -39,7 +40,10 @@ public class RaceService(
 
     public async Task<RaceResponse> GetByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        Race? race = await repository.GetByIdAsync(id);
+        if (race == null)
+            throw new NotFoundException();
+        return mapper.MapToResponse(race);
     }
 
     public async Task<IEnumerable<RaceResponse>> FindAsync(RacesQuery searchParameters)
@@ -56,7 +60,32 @@ public class RaceService(
 
     public async Task<RaceResponse> DeleteByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        logger.LogInformation("Forsøker å slette løp med id {RaceId}.", id);
+
+        var loggedInMemberId = httpContextAccessor.GetMemberId();
+        if (loggedInMemberId == null)
+        {
+            logger.LogWarning("Ugyldig forespørsel: Mangler innlogget bruker.");
+            throw new UnauthorizedAccessException("Innlogget bruker ikke funnet.");
+        }
+        
+        if (loggedInMemberId != id)
+        {
+            logger.LogWarning("Medlem {MemberId} prøvde å slette et løp opprettet av medlem {TargetMemberId}.", loggedInMemberId, id);
+            throw new UnauthorizedAccessException("Du har ikke tilgang til denne medlemskontoen.");
+        }
+
+        var raceToDelete = await repository.GetByIdAsync(id);
+        if (raceToDelete == null)
+        {
+            logger.LogWarning("Løp med id {id} eksisterer ikke.", id);
+            throw new KeyNotFoundException($"Løp med id {id} eksisterer ikke.");
+        }
+
+        await repository.DeleteByIdAsync(id);
+        logger.LogInformation("Løp {RaceId} ble slettet.", id);
+
+        return mapper.MapToResponse(raceToDelete);
     }
 
     public async Task<RaceResponse?> RegisterAsync(RaceResponse regResponse)

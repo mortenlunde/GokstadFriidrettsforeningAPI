@@ -1,5 +1,6 @@
 using GokstadFriidrettsforeningAPI.Extensions;
 using GokstadFriidrettsforeningAPI.Middleware;
+using GokstadFriidrettsforeningAPI.Services;
 using Newtonsoft.Json;
 using Serilog;
 

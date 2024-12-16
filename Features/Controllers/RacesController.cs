@@ -50,7 +50,7 @@ public class RacesController(ILogger<MembersController> logger,
     }
 
     [AllowAnonymous]
-    [HttpPost("Register", Name = "RegisterRaces")]
+    [HttpPost("Create", Name = "RegisterRaces")]
     public async Task<ActionResult<RaceResponse>> AddRacesAsync(RaceResponse raceResponse)
     {
         try
@@ -70,6 +70,33 @@ public class RacesController(ILogger<MembersController> logger,
         {
             logger.LogError(ex, "En ukjent feil oppsto ved registrering");
             return StatusCode(500, new { Message = "En ukjent feil oppsto. Vennligst prøv igjen senere!" });
+        }
+    }
+    
+    [HttpDelete("Delete")]
+    public async Task<IActionResult> DeleteRaceAsync([FromQuery] int id)
+    {
+        logger.LogInformation("Bruker forsøker å slette løp med ID {raceId}.", id);
+
+        try
+        {
+            await raceService.DeleteByIdAsync(id);
+            
+            return Ok("Løp slettet!");
+        }
+        catch (UnauthorizedAccessException)
+        {
+            return Unauthorized("Du har ikke tilgang til å slette dette løpet.");
+        }
+        catch (KeyNotFoundException ex)
+        {
+            logger.LogError(ex, "Løp ble ikke funnet under sletting: Løp {RaceId}", id);
+            return NotFound(new { ex.Message });
+        }
+        catch (Exception ex)
+        {
+            logger.LogError("En feil oppsto under sletting av løp: {Message}", ex.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError, "En intern feil oppsto.");
         }
     }
 }

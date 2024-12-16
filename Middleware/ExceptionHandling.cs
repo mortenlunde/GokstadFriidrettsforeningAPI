@@ -59,5 +59,3 @@ public class NotFoundException()
     : Exception("Dette objektet finnes ikke.") { }
     
 public class DatabaseUnavailableException(string message) : Exception(message);
-
-public class UnauthorizedAccessException(string message) : Exception(message);
