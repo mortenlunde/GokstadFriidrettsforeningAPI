@@ -25,14 +25,14 @@ public class MembersControllerTests
     public async Task GetmembersAsync_WhenDefaultPageSizeAndOneUserExists_ShouldReturnOneUser()
     {
         // Arrange
-        string lastName = "Normann";
-        List<MemberResponse> dtos = new()
-        {
-            new MemberResponse()
+        const string lastName = "Normann";
+        List<MemberResponse> dtos =
+        [
+            new ()
             {
-                MemberId = 1, 
+                MemberId = 1,
                 FirstName = "Ola",
-                LastName = "Normann", 
+                LastName = "Normann",
                 Gender = 'M',
                 Address = new Address
                 {
@@ -41,11 +41,11 @@ public class MembersControllerTests
                     PostalCode = 0154,
                 },
                 DateOfBirth = new DateOnly(1981, 10, 01),
-                Email = "ola_normann@gmail.com", 
+                Email = "ola_normann@gmail.com",
                 Updated = DateTime.UtcNow,
                 Created = DateTime.UtcNow,
             }
-        };
+        ];
     
         _mockmemberService.Setup(x => 
                 x.GetPagedAsync(It.IsAny<int>(), It.IsAny<int>()))
@@ -60,6 +60,6 @@ public class MembersControllerTests
         List<MemberResponse> memberResponses = Assert.IsType<List<MemberResponse>>(returnValue.Value);
         MemberResponse? member = memberResponses.FirstOrDefault();
         Assert.NotNull(member);
-        Assert.Equal(member.LastName, lastName);
+        Assert.Equal(lastName, member.LastName);
     }
 }
