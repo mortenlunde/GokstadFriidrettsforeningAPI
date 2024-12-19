@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GokstadFriidrettsforeningAPI", "GokstadFriidrettsforeningAPI\GokstadFriidrettsforeningAPI.csproj", "{3DA423A0-A1C0-4765-BA37-DC0AF19820F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GokstadFriidrettsforeningAPI.UnitTests", "GokstadFriidrettsforeningAPI.UnitTests\GokstadFriidrettsforeningAPI.UnitTests.csproj", "{CF793DAA-3C6F-47EC-8739-EF66ABC17FBD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3DA423A0-A1C0-4765-BA37-DC0AF19820F7} = {3DA423A0-A1C0-4765-BA37-DC0AF19820F7}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GokstadFriidrettsforeningAPI.IntegrationTests", "GokstadFriidrettsforeningAPI.IntegrationTests\GokstadFriidrettsforeningAPI.IntegrationTests.csproj", "{673027E8-7494-4925-9C70-BF9AF08CE480}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3DA423A0-A1C0-4765-BA37-DC0AF19820F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DA423A0-A1C0-4765-BA37-DC0AF19820F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DA423A0-A1C0-4765-BA37-DC0AF19820F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DA423A0-A1C0-4765-BA37-DC0AF19820F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF793DAA-3C6F-47EC-8739-EF66ABC17FBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF793DAA-3C6F-47EC-8739-EF66ABC17FBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF793DAA-3C6F-47EC-8739-EF66ABC17FBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF793DAA-3C6F-47EC-8739-EF66ABC17FBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{673027E8-7494-4925-9C70-BF9AF08CE480}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{673027E8-7494-4925-9C70-BF9AF08CE480}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{673027E8-7494-4925-9C70-BF9AF08CE480}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{673027E8-7494-4925-9C70-BF9AF08CE480}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

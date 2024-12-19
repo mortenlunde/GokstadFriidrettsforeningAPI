@@ -1,4 +1,6 @@
-/bin
-/config
 /.idea
+/GokstadFriidrettsforeningAPI.IntegrationTests/bin
+/GokstadFriidrettsforeningAPI.IntegrationTests/obj
+/GokstadFriidrettsforeningAPI.UnitTests/bin
+/GokstadFriidrettsforeningAPI.UnitTests/obj
 /obj
