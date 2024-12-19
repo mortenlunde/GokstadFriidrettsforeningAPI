@@ -3,4 +3,5 @@
 /GokstadFriidrettsforeningAPI.IntegrationTests/obj
 /GokstadFriidrettsforeningAPI.UnitTests/bin
 /GokstadFriidrettsforeningAPI.UnitTests/obj
-/obj
+/GokstadFriidrettsforeningAPI/bin
+/GokstadFriidrettsforeningAPI/obj
