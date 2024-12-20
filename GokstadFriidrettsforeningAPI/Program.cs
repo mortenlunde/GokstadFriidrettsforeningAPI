@@ -1,11 +1,9 @@
 using GokstadFriidrettsforeningAPI.Extensions;
-using GokstadFriidrettsforeningAPI.Middleware;
-using GokstadFriidrettsforeningAPI.Services;
-using Newtonsoft.Json;
 using Serilog;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+// Tjenester som registreres i applikasjonen
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerJwtAuthentication();
@@ -17,37 +15,20 @@ builder.Services.RegisterMappers();
 builder.Services.RegisterServices();
 builder.Services.RegisterRepositories();
 builder.Services.ConfigureExceptionHandler();
-builder.Host.UseSerilog((context, configuration) =>
-{
-    configuration.ReadFrom.Configuration(context.Configuration);
-});
+
+// Serilog-konfigurasjon
+builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
 WebApplication app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app
+    .UseSwagger()
+    .UseSwaggerUI();
 
-app.UseHealthChecks("/health", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
-{
-    ResponseWriter = async (context, report) =>
-    {
-        context.Response.ContentType = "application/json";
-        var result = JsonConvert.SerializeObject(new
-        {
-            status = report.Status.ToString(),
-            errors = report.Entries.Select(e => new
-            {
-                key = e.Key,
-                status = e.Value.Status.ToString(),
-                description = e.Value.Description
-            })
-        });
-        await context.Response.WriteAsync(result);
-    }
-});
+// Database Helsesjekk
+app.UseHealthChecks("/health");
+
+// Global feilhåndtering
 app.UseExceptionHandler(_ => { });
 app.UseHttpsRedirection();
 
@@ -57,4 +38,5 @@ app.MapControllers();
 
 app.Run();
 
+// For at integrasjonstest skal fungere
 public partial class Program { }

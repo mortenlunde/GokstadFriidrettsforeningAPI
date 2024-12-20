@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using MySqlConnector;
-
 namespace GokstadFriidrettsforeningAPI.Middleware;
 
 public class ExceptionHandling(ILogger<ExceptionHandling> logger) : IExceptionHandler
@@ -31,12 +30,19 @@ public class ExceptionHandling(ILogger<ExceptionHandling> logger) : IExceptionHa
         string? statusDescription = Enum.IsDefined(typeof(HttpStatusCode), statusCode)
             ? Enum.GetName(typeof(HttpStatusCode), statusCode)
             : "Ukjent statuskode";
+        
+        string detailMessage = exception switch
+        {
+            MySqlException => "Forsøk på å koble til databasen feilet. Vennligst prøv igjen senere.",
+            DatabaseUnavailableException dbEx => dbEx.Message,
+            _ => exception.Message
+        };
 
-        var problemDetails = new ProblemDetails
+        ProblemDetails problemDetails = new ProblemDetails
         {
             Status = statusCode,
             Title = statusDescription,
-            Detail = exception.Message
+            Detail = detailMessage
         };
 
         var options = new JsonSerializerOptions { WriteIndented = true };
@@ -45,7 +51,7 @@ public class ExceptionHandling(ILogger<ExceptionHandling> logger) : IExceptionHa
     }
 }
 
-// Custom Exception Classes
+// Egne feilhåndteringer
 public class EmailAlreadyExistsException(string email) 
     : Exception($"Epost '{email}' er allerede tatt i bruk av et annet medlem.");
 
@@ -58,4 +64,5 @@ public class UnauthorisedOperation()
 public class NotFoundException()
     : Exception("Dette objektet finnes ikke.") { }
     
-public class DatabaseUnavailableException(string message) : Exception(message);
+public class DatabaseUnavailableException(string message) 
+    : Exception(message);

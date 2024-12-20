@@ -1,6 +1,5 @@
 using GokstadFriidrettsforeningAPI.Models;
-
-namespace GokstadFriidrettsforeningAPI.Features.Repositories;
+namespace GokstadFriidrettsforeningAPI.Features.Repositories.Interfaces;
 
 public interface IRegistrationRepository : IRepositry<Registration>
 {

@@ -4,11 +4,12 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using GokstadFriidrettsforeningAPI.Data;
 using GokstadFriidrettsforeningAPI.Features.Repositories;
+using GokstadFriidrettsforeningAPI.Features.Repositories.Interfaces;
 using GokstadFriidrettsforeningAPI.Features.Services;
 using GokstadFriidrettsforeningAPI.Features.Services.Interfaces;
 using GokstadFriidrettsforeningAPI.Mappers;
 using GokstadFriidrettsforeningAPI.Middleware;
-using GokstadFriidrettsforeningAPI.Services;
+using GokstadFriidrettsforeningAPI.TokenHandling;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -18,6 +19,7 @@ namespace GokstadFriidrettsforeningAPI.Extensions;
 
 public static class ServiceCollectionExtension
 {
+    // For bruk av JWT i SwaggerUI
     public static void AddSwaggerJwtAuthentication(this IServiceCollection services)
     {
         services.AddSwaggerGen(c =>
@@ -48,6 +50,7 @@ public static class ServiceCollectionExtension
         });
     }
     
+    // Oppsett/konfigurering av JWT som authentication i APIet
     public static void ConfigureAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<JwtOptions>(configuration.GetSection("JWT"));
@@ -99,6 +102,7 @@ public static class ServiceCollectionExtension
 
     }
     
+    // Fluent API for datavalidering
     public static void ConfigureFluentValidation(this IServiceCollection services)
     {
         services.AddValidatorsFromAssemblyContaining<Program>();
@@ -106,6 +110,7 @@ public static class ServiceCollectionExtension
             options.DisableDataAnnotationsValidation = true);
     }
     
+    // Oppsett av database med feilhåndtering og ekstra forsøk på tilkobling ved feil
     public static void AddDatabaseService(this IServiceCollection services, IConfiguration configuration)
     {
         try
@@ -113,31 +118,36 @@ public static class ServiceCollectionExtension
             services.AddDbContext<GaaDbContext>(options =>
                 options.UseMySql(configuration.GetConnectionString("DefaultConnection"),
                     ServerVersion.AutoDetect(configuration.GetConnectionString("DefaultConnection")),
-                    mySqlOptions => mySqlOptions.EnableRetryOnFailure(2)));
+                    mySqlOptions => mySqlOptions.EnableRetryOnFailure(
+                        maxRetryCount: 5,
+                        maxRetryDelay: TimeSpan.FromSeconds(5),
+                        errorNumbersToAdd: null)));
         }
         catch (MySqlException)
         {
-            throw new DatabaseUnavailableException("Unable to connect to the database. Please try again later.");
+            throw new DatabaseUnavailableException("Forsøk på å nå database feilet. Vennligst prøv igjen senere.");
         }
         catch (Exception)
         {
-            throw new DatabaseUnavailableException("Unable to connect to the database.");
+            throw new DatabaseUnavailableException("Forsøk på å koble til database feilet.");
         }
     }
     
+    // Database- helsesjekk
     public static void AddDatabaseHealthCheck(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("DefaultConnection");
-
-        services.AddHealthChecks()
-            .AddMySql(connectionString, name: "Database", tags: new[] { "ready" });
+        services
+            .AddHealthChecks()
+            .AddMySql(configuration.GetConnectionString("DefaultConnection")!);
     }
     
+    // Feilhåndtering
     public static void ConfigureExceptionHandler(this IServiceCollection services)
     {
         services.AddExceptionHandler<ExceptionHandling>();
     }
     
+    // Registrering av mappere à la Yngve
     public static void RegisterMappers(this IServiceCollection services)
     {
         Assembly assembly = typeof(MemberMapper).Assembly;
@@ -154,6 +164,7 @@ public static class ServiceCollectionExtension
         }
     }
 
+    // Registrering av services à la Yngve
     public static void RegisterServices(this IServiceCollection services)
     {
         Assembly assembly = typeof(MemberService).Assembly;
@@ -170,6 +181,7 @@ public static class ServiceCollectionExtension
         }
     }
 
+    // Registrering av repositories à la Yngve
     public static void RegisterRepositories(this IServiceCollection services)
     {
         Assembly assembly = typeof(MemberRepository).Assembly;

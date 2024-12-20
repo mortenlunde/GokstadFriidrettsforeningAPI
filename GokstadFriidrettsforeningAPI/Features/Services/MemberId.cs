@@ -1,22 +1,19 @@
+using System.Security.Claims;
 namespace GokstadFriidrettsforeningAPI.Features.Services;
+/// <summary>
+/// Henter ut MemberID for å sjekke autorisasjon
+/// </summary>
 
 public interface IUserContextService
 {
-    int GetMemberId();
+    int? GetMemberId();
 }
 
-public class UserContextService : IUserContextService
+public class UserContextService(IHttpContextAccessor httpContextAccessor) : IUserContextService
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
-
-    public UserContextService(IHttpContextAccessor httpContextAccessor)
+    public int? GetMemberId()
     {
-        _httpContextAccessor = httpContextAccessor;
-    }
-
-    public int GetMemberId()
-    {
-        var memberIdClaim = _httpContextAccessor.HttpContext?.User?.FindFirst("MemberId");
+        Claim? memberIdClaim = httpContextAccessor.HttpContext?.User.FindFirst("MemberId");
         if (memberIdClaim == null)
             throw new UnauthorizedAccessException("Member ID is missing in the token.");
 

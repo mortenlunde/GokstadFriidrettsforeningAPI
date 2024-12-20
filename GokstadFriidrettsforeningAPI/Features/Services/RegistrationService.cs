@@ -1,11 +1,14 @@
-using GokstadFriidrettsforeningAPI.Features.Repositories;
+using GokstadFriidrettsforeningAPI.Features.Repositories.Interfaces;
 using GokstadFriidrettsforeningAPI.Features.Services.Interfaces;
 using GokstadFriidrettsforeningAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using InvalidOperationException = System.InvalidOperationException;
 using UnauthorizedAccessException = System.UnauthorizedAccessException;
-
 namespace GokstadFriidrettsforeningAPI.Features.Services;
+/// <summary>
+/// Service-laget håndterer forretningslogikken for medlemmer. 
+/// Utfører validering, koordinering mellom repository og eventuelle andre tjenester.
+/// </summary>
 
 public class RegistrationService(ILogger<RaceService> logger,
     IRegistrationRepository regRepository,

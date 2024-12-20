@@ -43,6 +43,7 @@ public class GaaDbContext(DbContextOptions<GaaDbContext> options) : DbContext(op
             entity.Property(m => m.MemberId).ValueGeneratedOnAdd();
         });
 
+        // Primærnøkler for Registration- tabell
         modelBuilder.Entity<Registration>(entity =>
         {
             entity.HasKey(r => new { r.MemberId, RacerId = r.RaceId });

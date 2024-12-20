@@ -8,8 +8,11 @@ using GokstadFriidrettsforeningAPI.ModelResponses;
 using GokstadFriidrettsforeningAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using UnauthorizedAccessException = System.UnauthorizedAccessException;
-
 namespace GokstadFriidrettsforeningAPI.Features.Services;
+/// <summary>
+/// Service-laget håndterer forretningslogikken for medlemmer. 
+/// Utfører validering, koordinering mellom repository og eventuelle andre tjenester.
+/// </summary>
 
 public class ResultService(ILogger<RaceService> logger,
     IResultRepository resultRepository,

@@ -1,12 +1,16 @@
 using System.Linq.Expressions;
 using GokstadFriidrettsforeningAPI.Features.Repositories;
+using GokstadFriidrettsforeningAPI.Features.Repositories.Interfaces;
 using GokstadFriidrettsforeningAPI.Features.Services.Interfaces;
 using GokstadFriidrettsforeningAPI.Mappers;
 using GokstadFriidrettsforeningAPI.Middleware;
 using GokstadFriidrettsforeningAPI.ModelResponses;
 using GokstadFriidrettsforeningAPI.Models;
-
 namespace GokstadFriidrettsforeningAPI.Features.Services;
+/// <summary>
+/// Service-laget håndterer forretningslogikken for medlemmer. 
+/// Utfører validering, koordinering mellom repository og eventuelle andre tjenester.
+/// </summary>
 
 public class RaceService(
     ILogger<RaceService> logger,

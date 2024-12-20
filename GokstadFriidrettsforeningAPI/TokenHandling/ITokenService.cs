@@ -1,4 +1,4 @@
-namespace GokstadFriidrettsforeningAPI.Services;
+namespace GokstadFriidrettsforeningAPI.TokenHandling;
 
 public interface ITokenService
 {

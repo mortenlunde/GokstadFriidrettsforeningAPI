@@ -2,12 +2,16 @@ using GokstadFriidrettsforeningAPI.Features.Services;
 using GokstadFriidrettsforeningAPI.Features.Services.Interfaces;
 using GokstadFriidrettsforeningAPI.Middleware;
 using GokstadFriidrettsforeningAPI.ModelResponses;
-using GokstadFriidrettsforeningAPI.Services;
+using GokstadFriidrettsforeningAPI.TokenHandling;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using UnauthorizedAccessException = System.UnauthorizedAccessException;
 namespace GokstadFriidrettsforeningAPI.Features.Controllers;
+/// <summary>
+/// Controller-laget eksponerer API-endepunktene for medlemmer.
+/// Tar imot HTTP-forespørsler, validerer input og delegerer logikk til servicelaget.
+/// </summary>
 
 [ApiController]
 [Route("api/v1/[controller]")]
@@ -118,7 +122,7 @@ public class MembersController(
     }
 
     [Authorize]
-    [HttpDelete("{id:int}", Name = "DeleteMember")]
+    [HttpDelete("Delete/{id:int}", Name = "DeleteMember")]
     public async Task<ActionResult<MemberResponse>> DeleteMemberAsync(int id)
     {
         logger.LogInformation("Bruker forsøker å slette medlemskonto med ID {MemberId}.", id);
@@ -140,7 +144,7 @@ public class MembersController(
     }
 
     [Authorize]
-    [HttpPut("{id:int}", Name = "UpdateMember")]
+    [HttpPut("Update/{id:int}", Name = "UpdateMember")]
     public async Task<ActionResult<MemberResponse>> UpdateMemberAsync(int id, [FromBody] MemberRegistration memberRegistration)
     {
         logger.LogInformation("Oppdaterer bruker med id {id}", id);

@@ -1,5 +1,4 @@
 using GokstadFriidrettsforeningAPI.Models;
-
 namespace GokstadFriidrettsforeningAPI.ModelResponses;
 
 public class MemberResponse

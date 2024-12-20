@@ -4,6 +4,10 @@ using GokstadFriidrettsforeningAPI.ModelResponses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace GokstadFriidrettsforeningAPI.Features.Controllers;
+/// <summary>
+/// Controller-laget eksponerer API-endepunktene for medlemmer.
+/// Tar imot HTTP-forespørsler, validerer input og delegerer logikk til servicelaget.
+/// </summary>
 
 [ApiController]
 [Route("api/v1/[controller]")]

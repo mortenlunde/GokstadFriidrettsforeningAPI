@@ -1,6 +1,5 @@
 using GokstadFriidrettsforeningAPI.ModelResponses;
 using GokstadFriidrettsforeningAPI.Models;
-
 namespace GokstadFriidrettsforeningAPI.Mappers;
 
 public class MemberRegMapper : IMapper<Member, MemberRegistration>

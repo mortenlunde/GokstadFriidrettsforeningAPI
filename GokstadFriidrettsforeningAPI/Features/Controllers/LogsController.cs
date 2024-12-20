@@ -2,8 +2,11 @@ using GokstadFriidrettsforeningAPI.Data;
 using GokstadFriidrettsforeningAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
 namespace GokstadFriidrettsforeningAPI.Features.Controllers;
+/// <summary>
+/// Controller-laget eksponerer API-endepunktene for medlemmer.
+/// Tar imot HTTP-forespørsler, validerer input og delegerer logikk til servicelaget.
+/// </summary>
 
 [ApiController]
 [Route("api/[controller]")]

@@ -1,0 +1,53 @@
+@GokstadFriidrettsforeningAPI_HostAddress = https://localhost:7190
+
+###
+GET {{GokstadFriidrettsforeningAPI_HostAddress}}/api/v1/Members/
+Authorization: Bearer {{YourTokenHere}}
+Accept: application/json
+###
+
+###
+POST {{GokstadFriidrettsforeningAPI_HostAddress}}/api/v1/Members/Register
+accept: application/json
+Content-Type: application/json
+
+{
+  "FirstName": "Morten",
+  "LastName": "Lunde",
+  "Email": "morten@lunde.no",
+  "Password": "Test1234!",
+  "Gender": "M",
+  "Address": {
+    "Street": "123 Main St",
+    "City": "Anytown",
+    "ZipCode": "12345"
+  },
+  "DateOfBirth": "1990-10-30"
+}
+###
+
+###
+@id = 1
+DELETE {{GokstadFriidrettsforeningAPI_HostAddress}}/api/v1/Members/Delete/{{id}}
+Authorization: Bearer {{YourTokenHere}}
+###
+
+###
+PUT {{GokstadFriidrettsforeningAPI_HostAddress}}/api/v1/Members/Update/{{id}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "FirstName": "Morten",
+  "LastName": "Lunde",
+  "Email": "morten@lundeeeeeee.no",
+  "Password": "Hemmelig1234!",
+  "Gender": "M",
+  "Address": {
+    "Street": "123 Main St",
+    "City": "Anytown",
+    "ZipCode": "12345"
+  },
+  "DateOfBirth": "1990-10-30"
+}
+###

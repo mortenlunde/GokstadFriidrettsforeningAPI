@@ -1,10 +1,14 @@
 using System.Linq.Expressions;
 using GokstadFriidrettsforeningAPI.Data;
+using GokstadFriidrettsforeningAPI.Features.Repositories.Interfaces;
 using GokstadFriidrettsforeningAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace GokstadFriidrettsforeningAPI.Features.Repositories;
-
+/// <summary>
+/// Repository for handling CRUD-operasjoner på medlemmer i databasen.
+/// Håndterer også filtrering, paginering, og logging av operasjoner.
+/// </summary>
 public class RaceRepositry(ILogger<MemberRepository> logger, GaaDbContext context) : IRaceRepository
 {
     public async Task<IEnumerable<Race>> GetPagedAsync(int pageNumber, int pageSize)
@@ -104,6 +108,7 @@ public class RaceRepositry(ILogger<MemberRepository> logger, GaaDbContext contex
 
     public async Task<Race?> UpdateByIdAsync(int id, Race entity)
     {
+        // Ikke behov for denne metoden
         throw new NotImplementedException();
     }
 }

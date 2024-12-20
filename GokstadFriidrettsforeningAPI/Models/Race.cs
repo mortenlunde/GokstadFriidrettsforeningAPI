@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-
 namespace GokstadFriidrettsforeningAPI.Models;
 
 public class Race

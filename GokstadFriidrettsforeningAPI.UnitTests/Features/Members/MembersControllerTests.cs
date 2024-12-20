@@ -3,7 +3,7 @@ using GokstadFriidrettsforeningAPI.Features.Services;
 using GokstadFriidrettsforeningAPI.Features.Services.Interfaces;
 using GokstadFriidrettsforeningAPI.ModelResponses;
 using GokstadFriidrettsforeningAPI.Models;
-using GokstadFriidrettsforeningAPI.Services;
+using GokstadFriidrettsforeningAPI.TokenHandling;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;

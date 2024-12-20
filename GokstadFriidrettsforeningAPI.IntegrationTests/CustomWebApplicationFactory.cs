@@ -1,4 +1,5 @@
 using GokstadFriidrettsforeningAPI.Features.Repositories;
+using GokstadFriidrettsforeningAPI.Features.Repositories.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;

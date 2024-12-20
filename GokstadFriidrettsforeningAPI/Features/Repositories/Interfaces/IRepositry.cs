@@ -1,6 +1,5 @@
 using System.Linq.Expressions;
-
-namespace GokstadFriidrettsforeningAPI.Features.Repositories;
+namespace GokstadFriidrettsforeningAPI.Features.Repositories.Interfaces;
 
 public interface IRepositry<T> where T: class
 {

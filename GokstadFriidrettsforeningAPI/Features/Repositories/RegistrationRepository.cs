@@ -1,12 +1,15 @@
 using System.Linq.Expressions;
 using GokstadFriidrettsforeningAPI.Data;
+using GokstadFriidrettsforeningAPI.Features.Repositories.Interfaces;
 using GokstadFriidrettsforeningAPI.Middleware;
 using GokstadFriidrettsforeningAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Exception = System.Exception;
-
 namespace GokstadFriidrettsforeningAPI.Features.Repositories;
-
+/// <summary>
+/// Repository for handling CRUD-operasjoner på medlemmer i databasen.
+/// Håndterer også filtrering, paginering, og logging av operasjoner.
+/// </summary>
 public class RegistrationRepository(ILogger<MemberRepository> logger, GaaDbContext context) : IRegistrationRepository
 {
     public async Task<IEnumerable<Registration>> GetPagedAsync(int pageNumber, int pageSize)
