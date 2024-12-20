@@ -4,19 +4,16 @@ using GokstadFriidrettsforeningAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace GokstadFriidrettsforeningAPI.Data.Migrations
+namespace GokstadFriidrettsforeningAPI.Migrations
 {
     [DbContext(typeof(GaaDbContext))]
-    [Migration("20241220003626_init")]
-    partial class init
+    partial class GaaDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

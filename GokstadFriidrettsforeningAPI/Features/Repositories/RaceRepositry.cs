@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GokstadFriidrettsforeningAPI.Features.Repositories;
 /// <summary>
-/// Repository for handling CRUD-operasjoner på medlemmer i databasen.
+/// Repository for håndtering av CRUD-operasjoner i databasen.
 /// Håndterer også filtrering, paginering, og logging av operasjoner.
 /// </summary>
 public class RaceRepositry(ILogger<MemberRepository> logger, GaaDbContext context) : IRaceRepository

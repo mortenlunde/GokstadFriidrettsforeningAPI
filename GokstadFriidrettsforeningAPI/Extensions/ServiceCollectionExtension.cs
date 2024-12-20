@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MySqlConnector;
-
 namespace GokstadFriidrettsforeningAPI.Extensions;
 
 public static class ServiceCollectionExtension

@@ -6,7 +6,7 @@ using InvalidOperationException = System.InvalidOperationException;
 using UnauthorizedAccessException = System.UnauthorizedAccessException;
 namespace GokstadFriidrettsforeningAPI.Features.Services;
 /// <summary>
-/// Service-laget håndterer forretningslogikken for medlemmer. 
+/// Service-laget håndterer forretningslogikken. 
 /// Utfører validering, koordinering mellom repository og eventuelle andre tjenester.
 /// </summary>
 

@@ -8,7 +8,7 @@ using Exception = System.Exception;
 
 namespace GokstadFriidrettsforeningAPI.Features.Repositories;
 /// <summary>
-/// Repository for handling CRUD-operasjoner på medlemmer i databasen.
+/// Repository for håndtering av CRUD-operasjoner i databasen.
 /// Håndterer også filtrering, paginering, og logging av operasjoner.
 /// </summary>
 public class ResultRepository(ILogger<MemberRepository> logger, GaaDbContext context) : IResultRepository

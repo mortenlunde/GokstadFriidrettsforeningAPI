@@ -1,5 +1,4 @@
 using System.Linq.Expressions;
-using GokstadFriidrettsforeningAPI.Features.Repositories;
 using GokstadFriidrettsforeningAPI.Features.Repositories.Interfaces;
 using GokstadFriidrettsforeningAPI.Features.Services.Interfaces;
 using GokstadFriidrettsforeningAPI.Mappers;
@@ -10,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using UnauthorizedAccessException = System.UnauthorizedAccessException;
 namespace GokstadFriidrettsforeningAPI.Features.Services;
 /// <summary>
-/// Service-laget håndterer forretningslogikken for medlemmer. 
+/// Service-laget håndterer forretningslogikken. 
 /// Utfører validering, koordinering mellom repository og eventuelle andre tjenester.
 /// </summary>
 

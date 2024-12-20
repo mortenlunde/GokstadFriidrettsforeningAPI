@@ -4,29 +4,21 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 namespace GokstadFriidrettsforeningAPI.Features.Controllers;
 /// <summary>
-/// Controller-laget eksponerer API-endepunktene for medlemmer.
+/// Controller-laget eksponerer API-endepunktene.
 /// Tar imot HTTP-forespørsler, validerer input og delegerer logikk til servicelaget.
 /// </summary>
 
 [ApiController]
 [Route("api/[controller]")]
-public class LogsController : ControllerBase
+public class LogsController(GaaDbContext context) : ControllerBase
 {
-    private readonly GaaDbContext _context;
-
-    public LogsController(GaaDbContext context)
-    {
-        _context = context;
-    }
-
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Log>>> GetLogsAsync([FromQuery] string? level)
     {
         try
         {
-            IQueryable<Log> query = _context.Logs;
+            IQueryable<Log> query = context.Logs;
 
-            // Filter by level if specified
             if (!string.IsNullOrEmpty(level))
             {
                 query = query.Where(log => log.Level == level);
