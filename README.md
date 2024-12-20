@@ -34,7 +34,7 @@ Serilog logger til:
 - Database i tabell 'Logs'.
 
 ## 📌 Endepunkter
-#### Medlemmer (MembersController)
+### Medlemmer (MembersController)
 
 `GET /api/v1/members` 
 - Henter medlemmer med paginering og valgfri søkefunksjonalitet.
