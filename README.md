@@ -2,6 +2,8 @@
 
 Dette prosjektet er en REST API-tjeneste for å håndtere administrasjon av medlemmene i Gokstad Friidrettsforening. API-et er bygget med .NET 9 Controllerbasert API og er også hostet i Azure.
 
+### 🌐 [Link til prosjekt i Azure](https://gokstadfriidrettsforeningapi-f5deb7aqebgyhtgk.norwayeast-01.azurewebsites.net/swagger/index.html)
+
 ## 🛠 Funksjonalitet
 - **Medlems- administrasjon**: Opprett, oppdater, slett og list opp med filter medlemmer.
 - **Løps- administrasjon**: Opprett, slett og list opp med filter løp.

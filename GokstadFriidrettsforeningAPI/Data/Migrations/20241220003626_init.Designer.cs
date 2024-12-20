@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GokstadFriidrettsforeningAPI.Data.Migrations
 {
     [DbContext(typeof(GaaDbContext))]
-    [Migration("20241209214440_init")]
+    [Migration("20241220003626_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -24,6 +24,35 @@ namespace GokstadFriidrettsforeningAPI.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
+
+            modelBuilder.Entity("GokstadFriidrettsforeningAPI.Models.Log", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int?>("Id"));
+
+                    b.Property<string>("Exception")
+                        .HasMaxLength(65535)
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Level")
+                        .HasMaxLength(15)
+                        .HasColumnType("varchar(15)");
+
+                    b.Property<string>("Message")
+                        .HasMaxLength(65535)
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Timestamp")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Logs");
+                });
 
             modelBuilder.Entity("GokstadFriidrettsforeningAPI.Models.Member", b =>
                 {
@@ -41,23 +70,28 @@ namespace GokstadFriidrettsforeningAPI.Data.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)");
 
                     b.Property<string>("Gender")
                         .IsRequired()
-                        .HasColumnType("varchar(1)");
+                        .HasMaxLength(1)
+                        .HasColumnType("CHAR(1)");
 
                     b.Property<string>("HashedPassword")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(60)
+                        .HasColumnType("varchar(60)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<DateTime>("Updated")
                         .HasColumnType("datetime(6)");
@@ -89,11 +123,30 @@ namespace GokstadFriidrettsforeningAPI.Data.Migrations
 
                     b.Property<string>("RaceName")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("RaceId");
 
                     b.ToTable("Races");
+                });
+
+            modelBuilder.Entity("GokstadFriidrettsforeningAPI.Models.Registration", b =>
+                {
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RaceId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("MemberId", "RaceId");
+
+                    b.HasIndex("RaceId");
+
+                    b.ToTable("Registrations");
                 });
 
             modelBuilder.Entity("GokstadFriidrettsforeningAPI.Models.Result", b =>
@@ -123,14 +176,19 @@ namespace GokstadFriidrettsforeningAPI.Data.Migrations
 
                             b1.Property<string>("City")
                                 .IsRequired()
-                                .HasColumnType("longtext");
+                                .HasMaxLength(50)
+                                .HasColumnType("varchar(50)")
+                                .HasColumnName("Address_City");
 
-                            b1.Property<int>("PostalCode")
-                                .HasColumnType("int");
+                            b1.Property<short>("PostalCode")
+                                .HasColumnType("SMALLINT")
+                                .HasColumnName("Address_PostalCode");
 
                             b1.Property<string>("Street")
                                 .IsRequired()
-                                .HasColumnType("longtext");
+                                .HasMaxLength(100)
+                                .HasColumnType("varchar(100)")
+                                .HasColumnName("Address_Street");
 
                             b1.HasKey("MemberId");
 
@@ -141,6 +199,25 @@ namespace GokstadFriidrettsforeningAPI.Data.Migrations
                         });
 
                     b.Navigation("Address");
+                });
+
+            modelBuilder.Entity("GokstadFriidrettsforeningAPI.Models.Registration", b =>
+                {
+                    b.HasOne("GokstadFriidrettsforeningAPI.Models.Member", "Member")
+                        .WithMany("Registrations")
+                        .HasForeignKey("MemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GokstadFriidrettsforeningAPI.Models.Race", "Race")
+                        .WithMany("Registrations")
+                        .HasForeignKey("RaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Member");
+
+                    b.Navigation("Race");
                 });
 
             modelBuilder.Entity("GokstadFriidrettsforeningAPI.Models.Result", b =>
@@ -164,11 +241,15 @@ namespace GokstadFriidrettsforeningAPI.Data.Migrations
 
             modelBuilder.Entity("GokstadFriidrettsforeningAPI.Models.Member", b =>
                 {
+                    b.Navigation("Registrations");
+
                     b.Navigation("Results");
                 });
 
             modelBuilder.Entity("GokstadFriidrettsforeningAPI.Models.Race", b =>
                 {
+                    b.Navigation("Registrations");
+
                     b.Navigation("Results");
                 });
 #pragma warning restore 612, 618

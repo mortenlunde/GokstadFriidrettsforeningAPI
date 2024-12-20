@@ -5,7 +5,7 @@
 namespace GokstadFriidrettsforeningAPI.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class dbfixv7 : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

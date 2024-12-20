@@ -22,6 +22,35 @@ namespace GokstadFriidrettsforeningAPI.Data.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
+            modelBuilder.Entity("GokstadFriidrettsforeningAPI.Models.Log", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int?>("Id"));
+
+                    b.Property<string>("Exception")
+                        .HasMaxLength(65535)
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Level")
+                        .HasMaxLength(15)
+                        .HasColumnType("varchar(15)");
+
+                    b.Property<string>("Message")
+                        .HasMaxLength(65535)
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Timestamp")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Logs");
+                });
+
             modelBuilder.Entity("GokstadFriidrettsforeningAPI.Models.Member", b =>
                 {
                     b.Property<int>("MemberId")
@@ -107,8 +136,8 @@ namespace GokstadFriidrettsforeningAPI.Data.Migrations
                     b.Property<int>("RaceId")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly>("RegistrationDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("datetime(6)");
 
                     b.HasKey("MemberId", "RaceId");
 
